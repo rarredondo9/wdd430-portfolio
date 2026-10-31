@@ -5,13 +5,13 @@ const projects = [
     title: 'Dom vs React Practice',
     description: 'A page comparing direct Dom manipulation with rendering the same content using a React component.',
     technologies: ['HTML', 'Javascript', 'React', 'Babel'],
-    link: '',
+    link: 'https://github.com/rarredondo9/wdd430--react-dom-practice.git/dom.html',
   },
   {
     title: 'React Core Principles',
     description: 'A practice page with a Greeting component that uses props and a Counter component that uses state.',
     technologies: ['React', 'Javascript', 'JSX'],
-    link: '',
+    link: 'https://github.com/rarredondo9/wdd430--react-dom-practice.git/react-core-concepts.html',
   },
 ];
 
