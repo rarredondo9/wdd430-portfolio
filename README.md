@@ -1,3 +1,7 @@
+# Rebeca Arredondo Laparra - WDD 430 Portfolio
+
+Live site: https://wdd430-portfolio-six-alpha.vercel.app/
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
