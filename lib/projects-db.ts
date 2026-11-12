@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 
-export type ProjectType = 'opensource' | 'source';
+export type ProjectType = 'opensource' | 'school';
 
 export interface Project {
     id: number;
