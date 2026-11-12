@@ -1,4 +1,5 @@
 import ProjectList from "@/components/ProjectList";
+import ProjectsFromApi from "@/components/ProjectsFromApi";
 
 const projects = [
   {

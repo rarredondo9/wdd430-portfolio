@@ -1,10 +1,13 @@
+import ProjectsFromApi from "@/components/ProjectsFromApi";
+
 export default function OpenSourceProjects() {
     return (
         <section>
             <h1 className="text-3xl font-bold mb-4">Open Source Projects</h1>
-            <p className="text-lg text-stone-700">
+            <p className="text-lg text-stone-700 mb-5">
                 Projects I have share publicly on Github for others to use and learn from.
             </p>
+            <ProjectsFromApi type="opensource" />
         </section>
     );
 }
