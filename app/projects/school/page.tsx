@@ -1,5 +1,6 @@
 import { Suspense } from "react";
-import ProjectsFromDb from "@/components/ProjectsFromDb";
+import SchoolProjectList from "@/components/SchoolProjectList";
+import ProjectCardSkeleton from "@/components/ProjectCardSkeleton";
 
 export default function SchoolProjects() {
     return (
@@ -8,8 +9,8 @@ export default function SchoolProjects() {
             <p className="text-lg text-stone-700 mb-10">
                Projects I have built for my web development classes at BYU-Idaho
             </p>
-            <Suspense fallback={<p role="status" className="text-stone-700">Loading projects...</p>}>
-                <ProjectsFromDb type="school" />
+            <Suspense fallback={<ProjectCardSkeleton count={3} />}>
+                <SchoolProjectList />
             </Suspense>            
         </section>
     );
