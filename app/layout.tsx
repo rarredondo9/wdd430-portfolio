@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='bg-stone-50 text-stone-900 min-h-screen flex flex-col'>
+      <body className='bg-stone-50 text-stone-900 min-h-screen flex flex-col' suppressHydrationWarning>
         <Header />
         <div className='flex-1'>{children}</div>
         <Footer />

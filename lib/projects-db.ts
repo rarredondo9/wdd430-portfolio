@@ -37,3 +37,42 @@ export async function getProjectById(id:number): Promise<Project | null> {
     `;
     return (rows[0] as Project | undefined) ?? null;
 }
+
+const ITEMS_PER_PAGE = 2;
+
+function cleanQuery(query: string): string {
+    return query.trim().slice(0,50);
+}
+
+export async function fetchFilteredProjects(
+    query:string,
+    currentPage: number
+): Promise<Project[]> {
+    const search = `%${cleanQuery(query)}%`;
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+    const rows = await sql`
+    SELECT * FROM projects
+    WHERE title ILIKE ${search}
+        OR description ILIKE ${search}
+        OR array_to_string(technologies, ' ') ILIKE ${search}
+    ORDER BY id
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return rows as Project[];
+}
+
+export async function fetchProjectsPages(query: string): Promise<number> {
+    const search = `%${cleanQuery(query)}%`;
+
+    const rows = await  sql`
+    SELECT COUNT(*) AS count FROM projects
+    WHERE title ILIKE ${search}
+        OR description ILIKE ${search}
+        OR array_to_string(technologies, ' ') ILIKE ${search}
+    `;
+
+    const count = Number(rows[0]?.count ?? 0);
+    return Math.ceil(count / ITEMS_PER_PAGE);
+}
