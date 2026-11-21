@@ -55,10 +55,15 @@ function toProjectId(id: string | number): number {
 export async function createProject(formData: FormData): Promise<void> {
     const { title, description, type, technologies, link } = parseProjectForm(formData);
 
-    await sql`
-    INSERT INTO projects (title, description, type, technologies, link)
-    VALUES (${title}, ${description}, ${type}, ${technologies}, ${link})
-    `;
+    try {
+        await sql`
+        INSERT INTO projects (title, description, type, technologies, link)
+        VALUES (${title}, ${description}, ${type}, ${technologies}, ${link})
+        `;
+    } catch (error) {
+        console.error('Database error while creating project:', error);
+        throw new Error('Failed to create project. Please try again later.');
+    }
 
     revalidatePath('/projects');
     redirect('/projects');
@@ -66,17 +71,22 @@ export async function createProject(formData: FormData): Promise<void> {
 
 export async function updateProject(id: string, formData: FormData): Promise<void> {
     const projectId = toProjectId(id);
-    const { title, description, type, technologies, link } =parseProjectForm(formData);
+    const { title, description, type, technologies, link } = parseProjectForm(formData);
 
-    await sql`
-        UPDATE projects
-        SET title = ${title},
-            description = ${description},
-            type = ${type},
-            technologies = ${technologies},
-            link = ${link}
-        WHERE id = ${projectId}
-    `;
+    try {
+        await sql`
+            UPDATE projects
+            SET title = ${title},
+                description = ${description},
+                type = ${type},
+                technologies = ${technologies},
+                link = ${link}
+            WHERE id = ${projectId}
+        `;
+    } catch (error) {
+        console.error('Database error while updating project:', error);
+        throw new Error('Failed to update project. Please try again later.');
+    }
 
     revalidatePath('/projects');
     redirect('/projects');
@@ -85,7 +95,12 @@ export async function updateProject(id: string, formData: FormData): Promise<voi
 export async function deleteProject(id: number): Promise<void> {
     const projectId = toProjectId(id);
 
-    await sql`DELETE FROM projects WHERE id = ${projectId}`;
+    try {
+        await sql`DELETE FROM projects WHERE id = ${projectId}`;
+    } catch (error) {
+        console.error('Database error while deleting project:', error);
+        throw new Error('Failed to delete project. Please try again later.');
+    }
 
     revalidatePath('/projects');
 }
