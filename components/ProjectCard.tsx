@@ -7,9 +7,10 @@ interface ProjectCardProps {
     description: string;
     technologies: string[];
     link?: string;
+    yearCompleted?: number | null;
 }
 
-export default function ProjectCard({ id, title, description, technologies, link }:ProjectCardProps) {
+export default function ProjectCard({ id, title, description, technologies, link, yearCompleted }:ProjectCardProps) {
     return (
         <article className="p-4 border-1-4 border-rose-400 bg-white rounded">
             <h3 className="text-xl font-bold mb-2 text-stone-900">{title}</h3>
@@ -17,6 +18,11 @@ export default function ProjectCard({ id, title, description, technologies, link
             <p className="text-sm text-stone-700">
                 <strong>Technologies:</strong> {technologies.join(', ')}
             </p>
+            {yearCompleted && (
+                <p className="text-sm text-stone-700">
+                    <strong>Completed:</strong> {yearCompleted}
+                </p>
+            )}
             {link && (
                 <p className="mt-2">
                     <a href={link} target="_blank" rel="noopener noreferrer" className="text-rose-700 hover:underline">

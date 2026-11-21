@@ -3,6 +3,7 @@ import ProjectList from "@/components/ProjectList";
 import { getProjects } from "@/lib/projects-db";
 
 export default async function OpenSourceProjects() {
+    await connection();
 
     const projects = await getProjects('opensource');
 

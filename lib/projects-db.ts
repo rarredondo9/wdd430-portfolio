@@ -9,6 +9,7 @@ export interface Project {
     type: ProjectType;
     technologies: string[];
     link?: string;
+    yearCompleted?: number | null;
 }
 
 const databaseUrl = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
@@ -22,7 +23,7 @@ export const sql = neon(databaseUrl);
 export async function getProjects(type?: string | null): Promise<Project[]> {
     if (type) {
         const rows = await sql`
-        SELECT * FROM projects WHERE type = ${type} ORDER BY id
+        SELECT id, title, description, type, technologies, link, year_completed AS "yearCompleted" FROM projects WHERE type = ${type} ORDER BY id
         `;
         return rows as Project[];
     }
@@ -33,7 +34,7 @@ export async function getProjects(type?: string | null): Promise<Project[]> {
 
 export async function getProjectById(id:number): Promise<Project | null> {
     const rows = await sql`
-    SELECT * FROM projects WHERE id = ${id}
+    SELECT id, title, description, type, technologies, link, year_completed AS "yearCompleted" FROM projects WHERE id = ${id}
     `;
     return (rows[0] as Project | undefined) ?? null;
 }
@@ -52,7 +53,7 @@ export async function fetchFilteredProjects(
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
     const rows = await sql`
-    SELECT * FROM projects
+    SELECT id, title, description, type, technologies, link, year_completed AS "yearCompleted" FROM projects
     WHERE title ILIKE ${search}
         OR description ILIKE ${search}
         OR array_to_string(technologies, ' ') ILIKE ${search}
