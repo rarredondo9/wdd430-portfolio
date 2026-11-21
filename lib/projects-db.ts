@@ -17,7 +17,7 @@ if (!databaseUrl) {
     throw new Error('Database URL is missing. Check your .env.local file.');
 }
 
-const sql = neon(databaseUrl);
+export const sql = neon(databaseUrl);
 
 export async function getProjects(type?: string | null): Promise<Project[]> {
     if (type) {
