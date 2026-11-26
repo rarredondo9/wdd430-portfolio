@@ -1,9 +1,19 @@
 'use server';
 
-import { z } from "zod";
+import { email, z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { sql } from "@/lib/projects-db";
+import { auth, signIn } from "@/auth";
+import { AuthError } from "next-auth";
+
+async function requireOwnerSession() {
+    const session = await auth();
+    if (!session?.user) {
+        throw new Error('Not authenticated');
+    }
+    return session;
+}
 
 const currentYear = new Date().getFullYear();
 
@@ -96,6 +106,7 @@ export async function createProject(
     prevState: ProjectFormState,
     formData: FormData
 ): Promise<ProjectFormState> {
+    await requireOwnerSession();
     const result = validateProjectForm(formData);
     if (!result.ok) return result.state;
 
@@ -120,6 +131,7 @@ export async function updateProject(
     prevState: ProjectFormState,
     formData: FormData
 ): Promise<ProjectFormState> {
+    await requireOwnerSession();
     const projectId = toProjectId(id);
     const result = validateProjectForm(formData);
     if (!result.ok) return result.state;
@@ -147,6 +159,7 @@ export async function updateProject(
 }
 
 export async function deleteProject(id: number): Promise<void> {
+    await requireOwnerSession();
     const projectId = toProjectId(id);
 
     try {
@@ -157,4 +170,24 @@ export async function deleteProject(id: number): Promise<void> {
     }
 
     revalidatePath('/projects');
+}
+
+export async function authenticate(
+    prevState: string | undefined,
+    formData: FormData
+): Promise<string | undefined> {
+    try { 
+        await signIn('credentials', {
+            email: formData.get('email'),
+            password: formData.get('password'),
+            redirectTo: '/projects',
+        });
+    } catch (error) {
+        if (error instanceof AuthError) {
+            return error.type === 'CredentialsSignin'
+            ? 'Invalid email or password.'
+            : 'Something went wrong.';
+        }
+        throw error;
+    }
 }

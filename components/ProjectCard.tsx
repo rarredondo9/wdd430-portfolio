@@ -8,9 +8,10 @@ interface ProjectCardProps {
     technologies: string[];
     link?: string;
     yearCompleted?: number | null;
+    canEdit?: boolean;
 }
 
-export default function ProjectCard({ id, title, description, technologies, link, yearCompleted }:ProjectCardProps) {
+export default function ProjectCard({ id, title, description, technologies, link, yearCompleted, canEdit }:ProjectCardProps) {
     return (
         <article className="p-4 border-1-4 border-rose-400 bg-white rounded">
             <h3 className="text-xl font-bold mb-2 text-stone-900">{title}</h3>
@@ -31,7 +32,7 @@ export default function ProjectCard({ id, title, description, technologies, link
                 </p>
             )}
 
-            {id !== undefined && (
+            {canEdit && id !== undefined && (
                 <div className="mt-4 flex gap-3">
                     <Link href={`/projects/${id}/edit`}
                     className="rounded-md border border-rose-300 px-3 py-1 text-sm font-semibold text-rose-700 hover:bg-rose-50">
