@@ -1,4 +1,9 @@
 import SkillsCard from "@/components/SkillsCard";
+import { title } from "process";
+import type { Metadata } from "next";
+
+export const metadata: Metadata =
+    {title: 'About'};
 
 export default function About() {
     return (

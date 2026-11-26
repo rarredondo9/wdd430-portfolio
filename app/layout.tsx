@@ -4,9 +4,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Rebeca Arredondo | Portfolio',
-  description: 'My WDD430 portfolio built with Next.js',
-} ;
+  title: {
+    default: 'Rebeca Arredondo | Portfolio',
+    template: '%s | Rebeca Arredondo',
+  },
+  description: 'Web development portfolio of Rebeca Arredondo, built with Next.js, React and TypeScript.',
+  metadataBase: new URL('https://wdd430-portfolio-six-alpha.vercel.app/')
+};
 
 export default function RootLayout({
   children, 

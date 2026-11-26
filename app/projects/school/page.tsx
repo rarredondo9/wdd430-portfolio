@@ -1,6 +1,11 @@
 import { Suspense } from "react";
 import SchoolProjectList from "@/components/SchoolProjectList";
 import ProjectCardSkeleton from "@/components/ProjectCardSkeleton";
+import type { Metadata } from "next";
+
+export const metadata: Metadata =
+    {title: 'School'};
+
 
 export default function SchoolProjects() {
     return (

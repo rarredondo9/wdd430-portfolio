@@ -1,6 +1,11 @@
 import { connection } from "next/server";
 import ProjectList from "@/components/ProjectList";
 import { getProjects } from "@/lib/projects-db";
+import type { Metadata } from "next";
+
+export const metadata: Metadata =
+    {title: 'OpenSource'};
+
 
 export default async function OpenSourceProjects() {
     await connection();

@@ -2,6 +2,11 @@ import { Suspense } from "react";
 import ProjectSearch from "@/components/ProjectSearch";
 import ProjectResults from "@/components/ProjectResults";
 import ProjectCardSkeleton from "@/components/ProjectCardSkeleton";
+import type { Metadata } from "next";
+
+export const metadata: Metadata =
+    {title: 'Projects'};
+
 
 export default function ProjectsOverview({
     searchParams,
